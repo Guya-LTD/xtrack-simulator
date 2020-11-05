@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "watch": "nodemon node app.js",
+    "watch": "nodemon app.js",
     "eg": "node csv_read_eg.js"
   },
   "dependencies": {
