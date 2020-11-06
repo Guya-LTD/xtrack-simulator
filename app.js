@@ -53,7 +53,8 @@ simulator = (id) => {
             console.log(" ID => " + id + " Coordinates => " + coordinate)
 
             // Check if the data is the last and if so exit the time interval
-            if(data.count == count) exit_interval = true;
+            // Restart it
+            if(data.count == count) count = 0;
 
             count++;
         }, 400);
