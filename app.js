@@ -13,12 +13,15 @@ const WAYPOINTS_FOLDER_NAME = 'waypoints/';
 const FILE_TYPE = '.csv';
 
 simulator = (id) => {
-    var socket = require('socket.io-client')(process.env.XTRACK_URL, {forceNew: true});
+    var dirverQuery = 'name=admin' + id + '&type=deiver';
+    var socket = require('socket.io-client')(process.env.XTRACK_URL, {forceNew: true, query: dirverQuery});
 
     // Lifecycle 1
     socket.on('connect', function() {
         // On connection open
-        console.log("Connection Established");
+        console.log("Connection Established: " + id);
+        // Create driver object
+        socket.emit('driver:connection:join');
         
         // Set Variables for this socket connection
         var count = 0;
@@ -43,21 +46,22 @@ simulator = (id) => {
         setInterval(() => {
             // Check if exit_interval and exit
             if(exit_interval) clearInterval(this);
-                
+
+            // Check if the data is the last and if so exit the time interval
+            // Restart it
+            if(data.length == count) count = 0;
+
             var coordinate = {
+                name: 'admin' + id,
                 longitude: data[count].longitude,
 		        latitude: data[count].latitude
             }
 
             socket.emit('location:update', coordinate)
-            console.log(" ID => " + id + " Coordinates => " + coordinate)
-
-            // Check if the data is the last and if so exit the time interval
-            // Restart it
-            if(data.count == count) count = 0;
+            //console.log(" ID => " + id + " Coordinates => " + coordinate)
 
             count++;
-        }, 400);
+        }, 4000);
 
     })
 
