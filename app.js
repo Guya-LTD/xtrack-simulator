@@ -61,7 +61,7 @@ simulator = (id) => {
             //console.log(" ID => " + id + " Coordinates => " + coordinate)
 
             count++;
-        }, 4000);
+        }, 400);
 
     })
 
